@@ -111,10 +111,10 @@ def test(model, input_data, result_path, max_length, block_trigram=True):
                 save_pred.write(pred[i].strip() + "\n")
 
 
-def summarize(raw_txt_fp, result_fp, model, max_length=3, max_pos=512, return_summary=True):
+def summarize(raw_txt_fp, result_fp, model, max_length=3, max_pos=512, return_summary=True, device='cpu'):
     model.eval()
     processed_text, full_length = preprocess(raw_txt_fp)
-    input_data = load_text(processed_text, max_pos, device="cpu")
+    input_data = load_text(processed_text, max_pos, device=device)
     test(model, input_data, result_fp, max_length, block_trigram=True)
     if return_summary:
         return open(result_fp).read().strip()
